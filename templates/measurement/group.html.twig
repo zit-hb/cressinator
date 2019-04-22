@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Measurements by Group{% endblock %}
+
+{% block body %}
+    {% for source in sources %}
+        <h2>{{ source.name }}</h2>
+        {% for measurement in source.getMeasurements() %}
+            <p>{{ measurement.id }}: {{ measurement.value }} ({{ measurement.createdAt|date('Y-m-d H:i:s') }})</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

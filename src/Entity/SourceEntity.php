@@ -44,6 +44,7 @@ class SourceEntity
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="App\Entity\MeasurementEntity", mappedBy="source")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     protected $measurements;
 
