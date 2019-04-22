@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -36,6 +37,7 @@ class MeasurementEntity
     /**
      * @var SourceEntity|null
      * @ORM\ManyToOne(targetEntity="App\Entity\SourceEntity", inversedBy="measurements")
+     * @Serializer\Exclude()
      */
     protected $source;
 

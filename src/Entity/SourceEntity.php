@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -45,6 +46,7 @@ class SourceEntity
      * @var Collection
      * @ORM\OneToMany(targetEntity="App\Entity\MeasurementEntity", mappedBy="source")
      * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @Serializer\Exclude()
      */
     protected $measurements;
 
