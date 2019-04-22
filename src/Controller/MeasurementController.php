@@ -17,7 +17,7 @@ class MeasurementController extends AbstractController
      */
     public function byGroup(string $group)
     {
-        /** @var SourceRepository $sources */
+        /** @var SourceRepository $sourceRepository */
         $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
         $sources = $sourceRepository->findByGroup($group);
         return $this->render('measurement/group.html.twig', ['sources' => $sources]);
