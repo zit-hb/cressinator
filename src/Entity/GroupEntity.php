@@ -26,6 +26,7 @@ class GroupEntity
      * @var string|null
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(max="50")
+     * @Assert\NotBlank()
      */
     protected $name;
 

@@ -25,6 +25,7 @@ class MeasurementEntity
      * @var string|null
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(max="50")
+     * @Assert\NotBlank()
      */
     protected $value;
 
@@ -37,6 +38,7 @@ class MeasurementEntity
     /**
      * @var SourceEntity|null
      * @ORM\ManyToOne(targetEntity="App\Entity\SourceEntity", inversedBy="measurements")
+     * @Assert\NotNull()
      * @Serializer\Exclude()
      */
     protected $source;

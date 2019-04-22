@@ -26,6 +26,7 @@ class SourceEntity
      * @var string|null
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(max="50")
+     * @Assert\NotBlank()
      */
     protected $name;
 
@@ -33,12 +34,14 @@ class SourceEntity
      * @var string|null
      * @ORM\Column(type="string", length=50)
      * @Assert\Length(max="50")
+     * @Assert\NotBlank()
      */
     protected $unit;
 
     /**
      * @var GroupEntity|null
      * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="sources")
+     * @Assert\NotNull()
      */
     protected $group;
 
