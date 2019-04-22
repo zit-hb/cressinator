@@ -15,7 +15,7 @@ class MeasurementController extends AbstractController
      * @return Response
      * @Route("/measurements/group:{group}")
      */
-    public function byGroup(string $group)
+    public function showByGroup(string $group): Response
     {
         /** @var SourceRepository $sourceRepository */
         $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
