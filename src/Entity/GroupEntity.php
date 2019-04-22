@@ -23,7 +23,7 @@ class GroupEntity
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length="50")
+     * @ORM\Column(type="string", length=50)
      * @Assert\Length(max="50")
      */
     protected $name;
