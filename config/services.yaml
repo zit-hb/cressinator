@@ -30,3 +30,6 @@ services:
         public: true
         arguments:
           - "@jms_serializer"
+
+    App\Twig\JsonifyExtension:
+        tags: ['twig.extension']

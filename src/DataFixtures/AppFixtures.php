@@ -12,24 +12,24 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $groupA = new GroupEntity();
-        $groupA->setId(1);
-        $groupA->setName('Group A');
-        $manager->persist($groupA);
+        $group = new GroupEntity();
+        $group->setName('Group');
+        $manager->persist($group);
 
-        $sourceA = new SourceEntity();
-        $sourceA->setId(1);
-        $sourceA->setName('Source A');
-        $sourceA->setUnit('Seconds');
-        $sourceA->setGroup($groupA);
-        $manager->persist($sourceA);
+        for ($j = 1; $j < 5; $j++) {
+            $source = new SourceEntity();
+            $source->setName('Source ' . $j);
+            $source->setUnit('Seconds');
+            $source->setGroup($group);
+            $manager->persist($source);
 
-        for ($i = 1; $i < 20; $i++) {
-            $measurement = new MeasurementEntity();
-            $measurement->setId($i);
-            $measurement->setValue(mt_rand(0, 100));
-            $measurement->setSource($sourceA);
-            $manager->persist($measurement);
+            for ($i = 1; $i < 20; $i++) {
+                $measurement = new MeasurementEntity();
+                $measurement->setValue(mt_rand(0, 100));
+                $measurement->setSource($source);
+                $measurement->setCreatedAt(new \DateTime(mt_rand(0, 100) . ' minutes'));
+                $manager->persist($measurement);
+            }
         }
 
         $manager->flush();

@@ -19,11 +19,16 @@ class SerializeService
     }
 
     /**
-     * @param $object
+     * @param mixed $object
+     * @param bool $raw
      * @return mixed
      */
-    public function normalize($object)
+    public function normalize($object, bool $raw = false)
     {
+        if ($raw) {
+            return $this->serializer->serialize($object, 'json');
+        }
+
         return json_decode($this->serializer->serialize($object, 'json'));
     }
 }

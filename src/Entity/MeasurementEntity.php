@@ -32,6 +32,7 @@ class MeasurementEntity
     /**
      * @var DateTime
      * @ORM\Column(type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     protected $createdAt;
 

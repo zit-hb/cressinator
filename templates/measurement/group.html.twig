@@ -2,11 +2,19 @@
 
 {% block title %}Measurements by Group{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.15.6/metricsgraphics.min.css" integrity="sha256-H83YjkVzXEyHSdZ/5aVRoW2QfqeJ7gIWduA7aCy9tWY=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.15.6/metricsgraphics.min.js" integrity="sha256-QFwUntQpro6H+h/btQ+8nVVDqeZnVQSuqsTTUGz2o44=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/measurement-graphs.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     {% for source in sources %}
-        <h2>{{ source.name }}</h2>
-        {% for measurement in source.getMeasurements() %}
-            <p>{{ measurement.id }}: {{ measurement.value }} ({{ measurement.createdAt|date('Y-m-d H:i:s') }})</p>
-        {% endfor %}
+        <div class="measurement-graph" data-name="{{ source.getName() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
     {% endfor %}
 {% endblock %}
