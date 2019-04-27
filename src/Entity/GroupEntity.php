@@ -39,7 +39,7 @@ class GroupEntity
 
     /**
      * @var Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="sources")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="group")
      * @ORM\OrderBy({"createdAt" = "ASC"})
      * @Serializer\Exclude()
      */
