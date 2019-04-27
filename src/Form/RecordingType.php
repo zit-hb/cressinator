@@ -16,7 +16,7 @@ class RecordingType extends AbstractType
     {
         $builder
             ->add('file', FileType::class)
-            ->add('sources')
+            ->add('group')
         ;
     }
 }

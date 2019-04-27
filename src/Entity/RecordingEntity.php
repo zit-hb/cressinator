@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,12 +37,11 @@ class RecordingEntity
     protected $createdAt;
 
     /**
-     * @var Collection
-     * @ORM\ManyToMany(targetEntity="App\Entity\SourceEntity", inversedBy="recordings")
+     * @var GroupEntity|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="recordings")
      * @Assert\NotNull()
-     * @Serializer\Exclude()
      */
-    protected $sources;
+    protected $group;
 
     /**
      * RecordingEntity constructor.
@@ -52,7 +49,6 @@ class RecordingEntity
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->sources = new ArrayCollection();
     }
 
     /**
@@ -104,34 +100,18 @@ class RecordingEntity
     }
 
     /**
-     * @return Collection
+     * @return GroupEntity|null
      */
-    public function getSources(): Collection
+    public function getGroup(): ?GroupEntity
     {
-        return $this->sources;
+        return $this->group;
     }
 
     /**
-     * @param Collection $sources
+     * @param GroupEntity $group
      */
-    public function setSources(Collection $sources)
+    public function setGroup(GroupEntity $group)
     {
-        $this->sources = $sources;
-    }
-
-    /**
-     * @param SourceEntity $source
-     */
-    public function addSource(SourceEntity $source)
-    {
-        $this->sources[] = $source;
-    }
-
-    /**
-     * @param SourceEntity $source
-     */
-    public function removeSource(SourceEntity $source)
-    {
-        $this->sources->remove($source);
+        $this->group = $group;
     }
 }

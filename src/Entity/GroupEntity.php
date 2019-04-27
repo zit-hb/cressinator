@@ -38,11 +38,20 @@ class GroupEntity
     protected $sources;
 
     /**
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="sources")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @Serializer\Exclude()
+     */
+    protected $recordings;
+
+    /**
      * GroupEntity constructor.
      */
     public function __construct()
     {
         $this->sources = new ArrayCollection();
+        $this->recordings = new ArrayCollection();
     }
 
     /**
@@ -107,5 +116,37 @@ class GroupEntity
     public function removeSource(SourceEntity $source)
     {
         $this->sources->remove($source);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getRecordings(): Collection
+    {
+        return $this->recordings;
+    }
+
+    /**
+     * @param Collection $recordings
+     */
+    public function setRecordings(Collection $recordings)
+    {
+        $this->recordings = $recordings;
+    }
+
+    /**
+     * @param RecordingEntity $recording
+     */
+    public function addRecording(RecordingEntity $recording)
+    {
+        $this->recordings[] = $recording;
+    }
+
+    /**
+     * @param RecordingEntity $recording
+     */
+    public function removeRecording(RecordingEntity $recording)
+    {
+        $this->recordings->remove($recording);
     }
 }
