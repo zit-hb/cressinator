@@ -47,7 +47,7 @@ class RecordingEntity
     protected $sources;
 
     /**
-     * MeasurementEntity constructor.
+     * RecordingEntity constructor.
      */
     public function __construct()
     {
