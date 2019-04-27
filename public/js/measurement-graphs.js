@@ -24,7 +24,6 @@ d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
             if ('id' in data) {
                 source = '/recordings/show:' + data['id'];
             }
-            console.log(data);
             $('#recording-image').attr('src', source);
 
             let createdAt = '';
