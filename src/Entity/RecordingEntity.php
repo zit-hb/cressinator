@@ -22,12 +22,18 @@ class RecordingEntity
     protected $id;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      * @Assert\File()
      */
     protected $file;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string")
+     */
+    protected $fileName;
 
     /**
      * @var DateTime
@@ -81,6 +87,22 @@ class RecordingEntity
     public function setFile(string $file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @param string $fileName
+     */
+    public function setFileName(string $fileName)
+    {
+        $this->fileName = $fileName;
     }
 
     /**
