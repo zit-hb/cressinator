@@ -54,11 +54,20 @@ class SourceEntity
     protected $measurements;
 
     /**
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="sources")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @Serializer\Exclude()
+     */
+    protected $recordings;
+
+    /**
      * SourceEntity constructor.
      */
     public function __construct()
     {
         $this->measurements = new ArrayCollection();
+        $this->recordings = new ArrayCollection();
     }
 
     /**
@@ -155,5 +164,37 @@ class SourceEntity
     public function removeMeasurement(MeasurementEntity $measurement)
     {
         $this->measurements->remove($measurement);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getRecordings(): Collection
+    {
+        return $this->recordings;
+    }
+
+    /**
+     * @param Collection $recordings
+     */
+    public function setRecordings(Collection $recordings)
+    {
+        $this->recordings = $recordings;
+    }
+
+    /**
+     * @param RecordingEntity $recording
+     */
+    public function addRecording(RecordingEntity $recording)
+    {
+        $this->recordings[] = $recording;
+    }
+
+    /**
+     * @param RecordingEntity $recording
+     */
+    public function removeRecording(RecordingEntity $recording)
+    {
+        $this->recordings->remove($recording);
     }
 }
