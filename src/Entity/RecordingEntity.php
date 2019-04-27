@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -74,17 +75,17 @@ class RecordingEntity
     }
 
     /**
-     * @return string|null
+     * @return string|UploadedFile|null
      */
-    public function getFile(): ?string
+    public function getFile()
     {
         return $this->file;
     }
 
     /**
-     * @param string $file
+     * @param string|UploadedFile $file
      */
-    public function setFile(string $file)
+    public function setFile($file)
     {
         $this->file = $file;
     }

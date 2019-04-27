@@ -26,7 +26,10 @@ class MeasurementController extends AbstractController
         /** @var SourceRepository $sourceRepository */
         $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
         $sources = $sourceRepository->findByGroup($group);
-        return $this->render('measurement/group.html.twig', ['sources' => $sources]);
+        return $this->render('measurement/group.html.twig', [
+            'sources' => $sources,
+            'group' => $group
+        ]);
     }
 
     /**

@@ -25,6 +25,10 @@ class SerializeService
      */
     public function normalize($object, bool $raw = false)
     {
+        if ($object === null) {
+            return null;
+        }
+
         if ($raw) {
             return $this->serializer->serialize($object, 'json');
         }
