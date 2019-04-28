@@ -30,3 +30,21 @@ Load test data:
 Start test server:
 
     ./bin/console server:run
+
+## Examples
+
+### Add Group
+
+    curl -d "group[name]=foo" -X POST http://127.0.0.1:8000/groups/add
+
+### Add Source
+
+    curl -d "source[name]=foo&source[unit]=bar&source[group]=1" -X POST http://127.0.0.1:8000/sources/add
+
+### Add Measurement
+
+    curl -d "measurement[value]=foo&measurement[source]=1" -X POST http://127.0.0.1:8000/measurements/add
+
+### Upload Recording
+
+    curl -F "recording[file]=@/path/to/file.jpg" -F "recording[group]=1" http://127.0.0.1:8000/recordings/add
