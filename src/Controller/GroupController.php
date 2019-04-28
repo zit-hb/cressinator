@@ -17,7 +17,7 @@ class GroupController extends AbstractController
 {
     /**
      * @return Response
-     * @Route("/groups")
+     * @Route("/groups", name="groups_list")
      */
     public function list(): Response
     {

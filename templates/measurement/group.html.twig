@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js" integrity="sha256-kX9/pjvgpDgSmoSfzAlYJeICaZXca16iu+c3F6ueKRo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.15.6/metricsgraphics.min.js" integrity="sha256-QFwUntQpro6H+h/btQ+8nVVDqeZnVQSuqsTTUGz2o44=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/measurement-graphs.js') }}"></script>
@@ -15,10 +14,14 @@
 
 {% block body %}
     {% for source in sources %}
-        <div class="measurement-graph" data-name="{{ source.getName() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
+        <div class="row">
+            <div class="measurement-graph" data-name="{{ source.getName() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
+        </div>
     {% endfor %}
-    <div id="recording" data-group="{{ group }}">
-        <img id="recording-image" />
-        <span id="recording-date"></span>
+    <div class="row">
+        <div id="recording" data-group="{{ group }}">
+            <img id="recording-image" />
+            <span id="recording-date"></span>
+        </div>
     </div>
 {% endblock %}

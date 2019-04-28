@@ -3,6 +3,7 @@
 {% block title %}Groups{% endblock %}
 
 {% block body %}
+    <h1 class="h2">Groups</h1>
     <ul>
     {% for group in groups %}
         <li><a href="{{ path('measurement_by_group', {'group': group.getId()}) }}">{{ group.getName() }}</a></li>
