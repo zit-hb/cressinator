@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block body %}
+    <ul>
+    {% for group in groups %}
+        <li><a href="{{ path('measurement_by_group', {'group': group.getId()}) }}">{{ group.getName() }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

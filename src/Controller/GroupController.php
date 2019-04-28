@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\GroupEntity;
 use App\Form\GroupType;
+use App\Repository\GroupRepository;
 use App\Service\SerializeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GroupController extends AbstractController
 {
+    /**
+     * @param string $group
+     * @return Response
+     * @Route("/groups")
+     */
+    public function list(): Response
+    {
+        /** @var GroupRepository $groupRepository */
+        $groupRepository = $this->getDoctrine()->getRepository(GroupEntity::class);
+        $groups = $groupRepository->findAll();
+        return $this->render('group/list.html.twig', ['groups' => $groups]);
+    }
+
     /**
      * @param Request $request
      * @param SerializeService $serializer

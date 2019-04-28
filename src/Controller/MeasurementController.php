@@ -19,7 +19,7 @@ class MeasurementController extends AbstractController
     /**
      * @param string $group
      * @return Response
-     * @Route("/measurements/group:{group}")
+     * @Route("/measurements/group:{group}", name="measurement_by_group")
      */
     public function showByGroup(string $group): Response
     {
