@@ -8,7 +8,6 @@ for (let measurement of measurements) {
         data: data,
         height: 150,
         full_width: true,
-        //width: 1000,
         target: measurement,
         y_label: measurement.dataset.unit,
         x_accessor: 'created_at',
