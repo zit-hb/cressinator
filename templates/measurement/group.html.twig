@@ -16,7 +16,7 @@
 {% block body %}
     {% for source in sources %}
         <div class="row">
-            <div class="measurement-graph" data-name="{{ source.getName() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
+            <div class="measurement-graph" data-name="{{ source.getName() }}" data-unit="{{ source.getUnit() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
         </div>
     {% endfor %}
     <div class="row">
