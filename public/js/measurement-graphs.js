@@ -6,8 +6,8 @@ for (let measurement of measurements) {
     MG.data_graphic({
         title: measurement.dataset.name,
         data: data,
-        width: 650,
         height: 150,
+        full_width: true,
         target: measurement,
         x_accessor: 'created_at',
         y_accessor: 'value'
