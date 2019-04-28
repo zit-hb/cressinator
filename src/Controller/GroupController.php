@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GroupController extends AbstractController
 {
     /**
-     * @param string $group
      * @return Response
      * @Route("/groups")
      */
