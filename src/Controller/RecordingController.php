@@ -7,11 +7,11 @@ use App\Entity\RecordingEntity;
 use App\Form\RecordingType;
 use App\Repository\RecordingRepository;
 use App\Service\SerializeService;
+use App\Traits\FormControllerTrait;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RecordingController extends AbstractController
 {
+    use FormControllerTrait;
+
     /**
      * @param string $id
      * @return Response
@@ -65,14 +67,7 @@ class RecordingController extends AbstractController
         $recording = new RecordingEntity();
         $form = $this->createForm(RecordingType::class, $recording, ['csrf_protection' => false]);
         $form->handleRequest($request);
-
-        if (!$form->isSubmitted()) {
-            throw new BadRequestHttpException('Form not submitted');
-        }
-
-        if (!$form->isValid()) {
-            throw new BadRequestHttpException('Form not valid');
-        }
+        $this->checkForm($form);
 
         /** @var UploadedFile $file */
         $file = $recording->getFile();

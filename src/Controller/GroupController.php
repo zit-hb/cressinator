@@ -6,15 +6,17 @@ use App\Entity\GroupEntity;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
 use App\Service\SerializeService;
+use App\Traits\FormControllerTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GroupController extends AbstractController
 {
+    use FormControllerTrait;
+
     /**
      * @return Response
      * @Route("/groups", name="groups_list")
@@ -38,14 +40,7 @@ class GroupController extends AbstractController
         $group = new GroupEntity();
         $form = $this->createForm(GroupType::class, $group, ['csrf_protection' => false]);
         $form->handleRequest($request);
-
-        if (!$form->isSubmitted()) {
-            throw new BadRequestHttpException('Form not submitted');
-        }
-
-        if (!$form->isValid()) {
-            throw new BadRequestHttpException('Form not valid');
-        }
+        $this->checkForm($form);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($group);
