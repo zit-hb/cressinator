@@ -5,18 +5,15 @@ namespace App\Controller;
 use App\Entity\GroupEntity;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
+use App\Service\Api\FormService;
 use App\Service\SerializeService;
-use App\Traits\FormControllerTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GroupController extends AbstractController
 {
-    use FormControllerTrait;
-
     /**
      * @return Response
      * @Route("/groups", name="groups_list")
@@ -30,17 +27,15 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param FormService $form
      * @param SerializeService $serializer
-     * @return Response
+     * @return JsonResponse
      * @Route("/groups/add")
      */
-    public function add(Request $request, SerializeService $serializer): Response
+    public function add(FormService $form, SerializeService $serializer): JsonResponse
     {
         $group = new GroupEntity();
-        $form = $this->createForm(GroupType::class, $group, ['csrf_protection' => false]);
-        $form->handleRequest($request);
-        $this->checkForm($form);
+        $form->processForm(GroupType::class, $group);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($group);

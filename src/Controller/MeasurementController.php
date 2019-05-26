@@ -5,19 +5,16 @@ namespace App\Controller;
 use App\Entity\MeasurementEntity;
 use App\Entity\SourceEntity;
 use App\Form\MeasurementType;
-use App\Service\SerializeService;
 use App\Repository\SourceRepository;
-use App\Traits\FormControllerTrait;
+use App\Service\Api\FormService;
+use App\Service\SerializeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MeasurementController extends AbstractController
 {
-    use FormControllerTrait;
-
     /**
      * @param string $group
      * @return Response
@@ -35,17 +32,15 @@ class MeasurementController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param FormService $form
      * @param SerializeService $serializer
-     * @return Response
+     * @return JsonResponse
      * @Route("/measurements/add")
      */
-    public function add(Request $request, SerializeService $serializer): Response
+    public function add(FormService $form, SerializeService $serializer): JsonResponse
     {
         $measurement = new MeasurementEntity();
-        $form = $this->createForm(MeasurementType::class, $measurement, ['csrf_protection' => false]);
-        $form->handleRequest($request);
-        $this->checkForm($form);
+        $form->processForm(MeasurementType::class, $measurement);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($measurement);

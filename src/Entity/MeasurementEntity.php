@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\MeasurementRepository")
  * @ORM\Table(name="measurements")
  */
-class MeasurementEntity
+class MeasurementEntity implements EntityInterface
 {
     /**
      * @var int|null

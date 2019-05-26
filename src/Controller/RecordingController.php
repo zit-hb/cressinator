@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
+use App\Service\Api\FormService;
 use DateTime;
 use App\Entity\RecordingEntity;
 use App\Form\RecordingType;
 use App\Repository\RecordingRepository;
 use App\Service\SerializeService;
-use App\Traits\FormControllerTrait;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RecordingController extends AbstractController
 {
-    use FormControllerTrait;
-
     /**
      * @param string $id
      * @return Response
@@ -57,17 +55,15 @@ class RecordingController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param FormService $form
      * @param SerializeService $serializer
-     * @return Response
+     * @return JsonResponse
      * @Route("/recordings/add")
      */
-    public function add(Request $request, SerializeService $serializer): Response
+    public function add(FormService $form, SerializeService $serializer): JsonResponse
     {
         $recording = new RecordingEntity();
-        $form = $this->createForm(RecordingType::class, $recording, ['csrf_protection' => false]);
-        $form->handleRequest($request);
-        $this->checkForm($form);
+        $form->processForm(RecordingType::class, $recording);
 
         /** @var UploadedFile $file */
         $file = $recording->getFile();

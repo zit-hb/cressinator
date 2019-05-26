@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\RecordingRepository")
  * @ORM\Table(name="recordings")
  */
-class RecordingEntity
+class RecordingEntity implements EntityInterface
 {
     /**
      * @var int|null
