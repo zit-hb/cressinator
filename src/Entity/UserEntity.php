@@ -4,23 +4,27 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
  */
-class User implements UserInterface
+class UserEntity implements UserInterface
 {
     /**
-     * @var int
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @var int|null
      * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(max="180")
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -31,7 +35,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string|null The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
