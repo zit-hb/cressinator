@@ -20,6 +20,8 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 2419200
                 path: /
+            logout:
+                path: app_logout
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
