@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Cassandra\Date;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,6 +33,20 @@ class GroupEntity implements EntityInterface
     protected $name;
 
     /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    protected $createdAt;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    protected $updatedAt;
+
+    /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="App\Entity\SourceEntity", mappedBy="group")
      * @Serializer\Exclude()
@@ -52,6 +68,8 @@ class GroupEntity implements EntityInterface
     {
         $this->sources = new ArrayCollection();
         $this->recordings = new ArrayCollection();
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     /**
@@ -84,6 +102,38 @@ class GroupEntity implements EntityInterface
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**

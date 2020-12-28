@@ -4,9 +4,26 @@
 
 {% block body %}
     <h1 class="h2">Groups</h1>
-    <ul>
-    {% for group in groups %}
-        <li><a href="{{ path('measurement_by_group', {'group': group.getId()}) }}">{{ group.getName() }}</a></li>
-    {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(groups, 'Name', 'a.name') }}</th>
+                <th>{{ knp_pagination_sortable(groups, 'Created At', 'a.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(groups, 'Updated At', 'a.updatedAt') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td><a href="{{ path('measurement_by_group', {'groupId': group.getId()}) }}">{{ group.getName() }}</a></td>
+                    <td>{{ group.getCreatedAt()|date("c") }}</td>
+                    <td>{{ group.getUpdatedAt()|date("c") }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(groups) }}
+    </div>
 {% endblock %}

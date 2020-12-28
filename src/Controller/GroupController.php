@@ -7,7 +7,10 @@ use App\Form\GroupType;
 use App\Repository\GroupRepository;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +21,15 @@ class GroupController extends AbstractController
      * @return Response
      * @Route("/groups", name="groups_list")
      */
-    public function list(): Response
+    public function list(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
-        /** @var GroupRepository $groupRepository */
-        $groupRepository = $this->getDoctrine()->getRepository(GroupEntity::class);
-        $groups = $groupRepository->findAll();
+        $query = $em->createQuery("SELECT a FROM App:GroupEntity a");
+        $groups = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('group/list.html.twig', ['groups' => $groups]);
     }
 

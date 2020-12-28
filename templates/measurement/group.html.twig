@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Measurements by Group{% endblock %}
+{% block title %}Group: {{ group.getName() }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.15.6/metricsgraphics.min.css" integrity="sha256-H83YjkVzXEyHSdZ/5aVRoW2QfqeJ7gIWduA7aCy9tWY=" crossorigin="anonymous" />
@@ -20,7 +20,7 @@
         </div>
     {% endfor %}
     <div class="row">
-        <div id="recording" data-group="{{ group }}">
+        <div id="recording" data-group="{{ group.getId() }}">
             <img id="recording-image" />
             <span id="recording-date"></span>
         </div>

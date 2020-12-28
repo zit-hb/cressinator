@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\Api\FormService;
 use DateTime;
+use App\Service\Api\FormService;
 use App\Entity\RecordingEntity;
 use App\Form\RecordingType;
 use App\Repository\RecordingRepository;
@@ -40,17 +40,17 @@ class RecordingController extends AbstractController
 
     /**
      * @param string $date
-     * @param string $group
+     * @param string $groupId
      * @param Request $request
      * @param SerializeService $serializer
      * @return Response
-     * @Route("/recordings/closest:{date}/group:{group}")
+     * @Route("/recordings/closest:{date}/group:{groupId}")
      */
-    public function closestByGroup(string $date, string $group, Request $request, SerializeService $serializer): Response
+    public function closestByGroup(string $date, string $groupId, Request $request, SerializeService $serializer): Response
     {
         /** @var RecordingRepository $recordingRepository */
         $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
-        $recording = $recordingRepository->findClosestByGroup(new DateTime($date), $group);
+        $recording = $recordingRepository->findClosestByGroup(new DateTime($date), $groupId);
         return new JsonResponse($serializer->normalize($recording));
     }
 
@@ -72,8 +72,12 @@ class RecordingController extends AbstractController
         $recording->setFile($fileName);
         $recording->setFileName($file->getClientOriginalName());
 
+        $group = $recording->getGroup();
+        $group->setUpdatedAt(new DateTime());
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($recording);
+        $em->persist($group);
         $em->flush();
 
         return new JsonResponse($serializer->normalize($recording));

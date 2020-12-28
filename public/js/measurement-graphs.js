@@ -19,7 +19,7 @@ d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
     let recording = $('#recording');
 
     $.ajax({
-        url: '/recordings/closest:' + point.created_at.toJSON() + '/group:' + recording.data('group'),
+        url: '/recordings/closest:' + encodeURIComponent(point.created_at.toJSON()) + '/group:' + encodeURIComponent(recording.data('group')),
         success: function(data) {
             let source = '';
             if ('id' in data) {
