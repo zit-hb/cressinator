@@ -5,15 +5,16 @@ namespace App\DataFixtures;
 use App\Entity\GroupEntity;
 use App\Entity\MeasurementEntity;
 use App\Entity\SourceEntity;
+use App\Entity\UserEntity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
         $group = new GroupEntity();
-        $group->setName('Group');
+        $group->setName('Group 1');
         $manager->persist($group);
 
         for ($j = 1; $j < 5; $j++) {

@@ -29,7 +29,7 @@ Load test data:
 
 Start test server:
 
-    ./bin/console server:run
+    symfony server:start
 
 ## Examples
 
