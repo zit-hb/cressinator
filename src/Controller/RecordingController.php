@@ -24,7 +24,7 @@ class RecordingController extends AbstractController
      * @return Response
      * @Route("/recordings/show:{id}")
      */
-    public function showById(string $id)
+    public function showById(string $id): BinaryFileResponse
     {
         /** @var RecordingRepository $recordingRepository */
         $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);

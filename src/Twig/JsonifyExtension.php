@@ -23,7 +23,7 @@ class JsonifyExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('jsonify', [$this, 'jsonify']),

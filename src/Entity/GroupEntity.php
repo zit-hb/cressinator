@@ -91,7 +91,7 @@ class GroupEntity implements EntityInterface
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
