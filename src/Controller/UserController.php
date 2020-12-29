@@ -31,8 +31,11 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $hash = $encoder->encodePassword($user, $profile->getNewPassword());
-            $user->setPassword($hash);
+            if (!empty($profile->getNewPassword())) {
+                $hash = $encoder->encodePassword($user, $profile->getNewPassword());
+                $user->setPassword($hash);
+            }
+            $user->generateApiToken();
 
             $entityManager->persist($user);
             $entityManager->flush();

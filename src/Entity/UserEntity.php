@@ -53,7 +53,7 @@ class UserEntity implements UserInterface
      */
     public function __construct()
     {
-        $this->apiToken = hash('sha256', random_bytes(32));
+        $this->generateApiToken();
     }
 
     /**
@@ -74,7 +74,7 @@ class UserEntity implements UserInterface
 
     /**
      * @param string $email
-     * @return User
+     * @return UserEntity
      */
     public function setEmail(string $email): self
     {
@@ -109,7 +109,7 @@ class UserEntity implements UserInterface
 
     /**
      * @param array $roles
-     * @return User
+     * @return UserEntity
      */
     public function setRoles(array $roles): self
     {
@@ -129,7 +129,7 @@ class UserEntity implements UserInterface
 
     /**
      * @param string $password
-     * @return User
+     * @return UserEntity
      */
     public function setPassword(string $password): self
     {
@@ -165,11 +165,22 @@ class UserEntity implements UserInterface
 
     /**
      * @param string|null $apiToken
-     * @return User
+     * @return UserEntity
      */
     public function setApiToken(?string $apiToken): self
     {
         $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     * @return UserEntity
+     */
+    public function generateApiToken(): self
+    {
+        $this->apiToken = hash('sha256', random_bytes(32));
 
         return $this;
     }

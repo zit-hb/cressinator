@@ -16,7 +16,6 @@ class ProfileEntity
 
     /**
      * @var string|null
-     * @Assert\NotBlank()
      */
     protected $newPassword;
 

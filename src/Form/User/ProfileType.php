@@ -23,7 +23,7 @@ class ProfileType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
+                'required' => false,
                 'first_options'  => ['label' => 'New Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
