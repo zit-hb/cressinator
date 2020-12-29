@@ -3,7 +3,11 @@ Cressinator
 
 A web application to store and view data of environmental sensors.
 
-# Work In Progress
+## Requirements
+
+  * [Composer](https://getcomposer.org/)
+  * [Symfony CLI](https://symfony.com/download)
+  * PHP >= 7.2
 
 ## Development
 
@@ -26,6 +30,10 @@ Initialize database:
 Load test data:
 
     ./bin/console doctrine:fixtures:load
+
+Add user:
+
+    ./bin/console user:create
 
 Start test server:
 
