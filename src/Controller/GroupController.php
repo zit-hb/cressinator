@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\GroupEntity;
 use App\Form\GroupType;
-use App\Repository\GroupRepository;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
 use Doctrine\ORM\EntityManagerInterface;

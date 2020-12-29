@@ -1,15 +1,22 @@
+{% set route = app.request.attributes.get('_route') %}
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ path('groups_list') }}">
+                <a class="nav-link {% if route == 'groups_list' %}active{% endif %}" href="{{ path('groups_list') }}">
                     <span data-feather="bar-chart-2"></span>
                     Groups
                 </a>
             </li>
             {% if app.user %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ path('app_logout') }}">
+                    <a class="nav-link {% if route == 'user_profile' %}active{% endif %}" href="{{ path('user_profile') }}">
+                        <span data-feather="user"></span>
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
                         <span data-feather="log-out"></span>
                         Logout
                     </a>
