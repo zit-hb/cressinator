@@ -43,6 +43,20 @@ class UserEntity implements UserInterface
     private $password;
 
     /**
+     * @var string The plain API token
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $apiToken;
+
+    /**
+     * UserEntity constructor.
+     */
+    public function __construct()
+    {
+        $this->apiToken = hash('sha256', random_bytes(32));
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -139,5 +153,24 @@ class UserEntity implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here.
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param string|null $apiToken
+     * @return User
+     */
+    public function setApiToken(?string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
+
+        return $this;
     }
 }

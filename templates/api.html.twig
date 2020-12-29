@@ -1,0 +1,3 @@
+{% if app.user %}
+    <div id="api" data-token="{{ app.user.getApiToken() }}"></div>
+{% endif %}

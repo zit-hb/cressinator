@@ -18,7 +18,8 @@ for (let measurement of measurements) {
 d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
     $('#measurement-date').text(point.created_at.toJSON());
     $.ajax({
-        url: '/recordings/closest:' + encodeURIComponent(point.created_at.toJSON()) + '/group:' + encodeURIComponent($('#recording').data('group')),
+        url: '/api/recordings/closest:' + encodeURIComponent(point.created_at.toJSON()) + '/group:' + encodeURIComponent($('#recording').data('group')),
+        headers: { 'X-Auth-Token': $('#api').data('token') },
         success: function(data) {
             let source = '';
             if ('id' in data) {

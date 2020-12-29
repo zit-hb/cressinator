@@ -60,7 +60,7 @@ class MeasurementController extends AbstractController
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse
-     * @Route("/measurements/add")
+     * @Route("/api/measurements/add")
      */
     public function add(FormService $form, SerializeService $serializer): JsonResponse
     {

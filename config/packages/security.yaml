@@ -3,17 +3,29 @@ security:
         App\Entity\UserEntity:
             algorithm: argon2i
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\UserEntity
                 property: email
+        app_api_provider:
+            entity:
+                class: App\Entity\UserEntity
+                property: apiToken
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api/
+            anonymous: true
+            lazy: true
+            logout: ~
+            stateless: true
+            guard:
+                provider: app_api_provider
+                authenticators:
+                    - App\Security\TokenAuthenticator
         main:
             anonymous: true
             remember_me:
@@ -23,6 +35,7 @@ security:
             logout:
                 path: app_logout
             guard:
+                provider: app_user_provider
                 authenticators:
                     - App\Security\LoginFormAuthenticator
 

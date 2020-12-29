@@ -44,7 +44,7 @@ class RecordingController extends AbstractController
      * @param Request $request
      * @param SerializeService $serializer
      * @return Response
-     * @Route("/recordings/closest:{date}/group:{groupId}")
+     * @Route("/api/recordings/closest:{date}/group:{groupId}")
      */
     public function closestByGroup(string $date, string $groupId, Request $request, SerializeService $serializer): Response
     {
@@ -58,7 +58,7 @@ class RecordingController extends AbstractController
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse
-     * @Route("/recordings/add")
+     * @Route("/api/recordings/add")
      */
     public function add(FormService $form, SerializeService $serializer): JsonResponse
     {

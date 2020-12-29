@@ -37,7 +37,7 @@ class GroupController extends AbstractController
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse
-     * @Route("/groups/add")
+     * @Route("/api/groups/add")
      */
     public function add(FormService $form, SerializeService $serializer): JsonResponse
     {

@@ -16,7 +16,7 @@ class SourceController extends AbstractController
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse
-     * @Route("/sources/add")
+     * @Route("/api/sources/add")
      */
     public function add(FormService $form, SerializeService $serializer): JsonResponse
     {
