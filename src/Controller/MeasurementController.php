@@ -40,6 +40,23 @@ class MeasurementController extends AbstractController
     }
 
     /**
+     * @param string $sourceId
+     * @return Response
+     * @Route("/measurements/source:{sourceId}", name="measurement_by_source")
+     */
+    public function showBySource(string $sourceId): Response
+    {
+        /** @var SourceRepository $sourceRepository */
+        $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
+        $source = $sourceRepository->find($sourceId);
+
+        return $this->render('measurement/source.html.twig', [
+            'source' => $source,
+            'group' => $source->getGroup()
+        ]);
+    }
+
+    /**
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse

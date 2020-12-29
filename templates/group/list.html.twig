@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th>{{ knp_pagination_sortable(groups, 'Name', 'a.name') }}</th>
+                <th>Sources</th>
                 <th>{{ knp_pagination_sortable(groups, 'Created At', 'a.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(groups, 'Updated At', 'a.updatedAt') }}</th>
             </tr>
@@ -15,7 +16,14 @@
         <tbody>
             {% for group in groups %}
                 <tr>
-                    <td><a href="{{ path('measurement_by_group', {'groupId': group.getId()}) }}">{{ group.getName() }}</a></td>
+                    <td>
+                        <a href="{{ path('measurement_by_group', {'groupId': group.getId()}) }}">{{ group.getName() }}</a>
+                    </td>
+                    <td>
+                        {% for source in group.getSources() %}
+                            <a href="{{ path('measurement_by_source', {'sourceId': source.getId()}) }}">{{ source.getName() }}</a>
+                        {% endfor %}
+                    </td>
                     <td>{{ group.getCreatedAt()|date("c") }}</td>
                     <td>{{ group.getUpdatedAt()|date("c") }}</td>
                 </tr>
