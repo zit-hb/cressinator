@@ -32,7 +32,7 @@ class MeasurementEntity implements EntityInterface
     /**
      * @var DateTime
      * @ORM\Column(type="datetime")
-     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
+     * @Serializer\Type("DateTime<'c'>")
      */
     protected $createdAt;
 
