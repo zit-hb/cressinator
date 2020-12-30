@@ -1,18 +1,19 @@
--
-  name: In. Temperature
-  unit: °C
--
-  name: Out. Temperature
-  unit: °C
--
-  name: Light
-  unit: lux
--
-  name: CO2
-  unit: ppm
--
-  name: Humidity
-  unit: "%RH"
--
-  name: Pressure
-  unit: mbar
+measurements:
+    -
+      name: In. Temperature
+      unit: °C
+    -
+      name: Out. Temperature
+      unit: °C
+    -
+      name: Light
+      unit: lux
+    -
+      name: CO2
+      unit: ppm
+    -
+      name: Humidity
+      unit: "%RH"
+    -
+      name: Pressure
+      unit: mbar

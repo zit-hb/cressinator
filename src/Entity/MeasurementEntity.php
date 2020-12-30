@@ -37,8 +37,8 @@ class MeasurementEntity implements EntityInterface
     protected $createdAt;
 
     /**
-     * @var SourceEntity|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\SourceEntity", inversedBy="measurements")
+     * @var MeasurementSourceEntity|null
+     * @ORM\ManyToOne(targetEntity="MeasurementSourceEntity", inversedBy="measurements")
      * @Assert\NotNull()
      * @Serializer\Exclude()
      */
@@ -101,17 +101,17 @@ class MeasurementEntity implements EntityInterface
     }
 
     /**
-     * @return SourceEntity|null
+     * @return MeasurementSourceEntity|null
      */
-    public function getSource(): ?SourceEntity
+    public function getSource(): ?MeasurementSourceEntity
     {
         return $this->source;
     }
 
     /**
-     * @param SourceEntity $source
+     * @param MeasurementSourceEntity $source
      */
-    public function setSource(SourceEntity $source)
+    public function setSource(MeasurementSourceEntity $source)
     {
         $this->source = $source;
     }

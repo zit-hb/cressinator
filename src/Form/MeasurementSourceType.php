@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class SourceType extends AbstractType
+class MeasurementSourceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

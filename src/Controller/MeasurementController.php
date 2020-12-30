@@ -5,9 +5,9 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\GroupEntity;
 use App\Entity\MeasurementEntity;
-use App\Entity\SourceEntity;
+use App\Entity\MeasurementSourceEntity;
 use App\Form\MeasurementType;
-use App\Repository\SourceRepository;
+use App\Repository\MeasurementSourceRepository;
 use App\Repository\GroupRepository;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
@@ -25,9 +25,9 @@ class MeasurementController extends AbstractController
      */
     public function showByGroup(string $groupId): Response
     {
-        /** @var SourceRepository $sourceRepository */
-        $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
-        $sources = $sourceRepository->findByGroup($groupId);
+        /** @var MeasurementSourceRepository $measurementSourceRepository */
+        $measurementSourceRepository = $this->getDoctrine()->getRepository(MeasurementSourceEntity::class);
+        $sources = $measurementSourceRepository->findByGroup($groupId);
 
         /** @var GroupRepository $groupRepository */
         $groupRepository = $this->getDoctrine()->getRepository(GroupEntity::class);
@@ -46,9 +46,9 @@ class MeasurementController extends AbstractController
      */
     public function showBySource(string $sourceId): Response
     {
-        /** @var SourceRepository $sourceRepository */
-        $sourceRepository = $this->getDoctrine()->getRepository(SourceEntity::class);
-        $source = $sourceRepository->find($sourceId);
+        /** @var MeasurementSourceRepository $measurementSourceRepository */
+        $measurementSourceRepository = $this->getDoctrine()->getRepository(MeasurementSourceEntity::class);
+        $source = $measurementSourceRepository->find($sourceId);
 
         return $this->render('measurement/source.html.twig', [
             'source' => $source,

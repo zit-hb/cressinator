@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\GroupEntity;
 use Doctrine\ORM\EntityRepository;
 
-class SourceRepository extends EntityRepository
+class MeasurementSourceRepository extends EntityRepository
 {
     /**
      * @param string $group

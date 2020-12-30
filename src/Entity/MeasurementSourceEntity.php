@@ -10,10 +10,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SourceRepository")
- * @ORM\Table(name="sources")
+ * @ORM\Entity(repositoryClass="App\Repository\MeasurementSourceRepository")
+ * @ORM\Table(name="measurement_sources")
  */
-class SourceEntity implements EntityInterface
+class MeasurementSourceEntity implements EntityInterface
 {
     /**
      * @var int|null
@@ -69,7 +69,7 @@ class SourceEntity implements EntityInterface
     protected $measurements;
 
     /**
-     * SourceEntity constructor.
+     * MeasurementSourceEntity constructor.
      */
     public function __construct()
     {

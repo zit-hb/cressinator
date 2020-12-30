@@ -2,26 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\SourceEntity;
-use App\Form\SourceType;
+use App\Entity\MeasurementSourceEntity;
+use App\Form\MeasurementSourceType;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class SourceController extends AbstractController
+class MeasurementSourceController extends AbstractController
 {
     /**
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse
-     * @Route("/api/sources/add")
+     * @Route("/api/measurement_sources/add")
      */
     public function add(FormService $form, SerializeService $serializer): JsonResponse
     {
-        $source = new SourceEntity();
-        $form->processForm(SourceType::class, $source);
+        $source = new MeasurementSourceEntity();
+        $form->processForm(MeasurementSourceType::class, $source);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($source);

@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Entity\GroupEntity;
-use App\Entity\SourceEntity;
+use App\Entity\MeasurementSourceEntity;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -102,29 +102,32 @@ class ImportGroupCommand extends Command
         $rawContent = file_get_contents($input->getOption('file'));
         $parsedContent = Yaml::parse($rawContent);
 
-        foreach ($parsedContent as $parsedSource) {
-            if (empty($parsedSource['name']) || empty($parsedSource['unit'])) {
-                $output->writeln('<error>Error:</error> Invalid file structure');
-                return Command::FAILURE;
+        if (!empty($parsedContent['measurements'])) {
+            $parsedMeasurements = $parsedContent['measurements'];
+            foreach ($parsedMeasurements as $parsedSource) {
+                if (empty($parsedSource['name']) || empty($parsedSource['unit'])) {
+                    $output->writeln('<error>Error:</error> Invalid file structure');
+                    return Command::FAILURE;
+                }
+
+                $source = new MeasurementSourceEntity();
+                $source->setName($parsedSource['name']);
+                $source->setUnit($parsedSource['unit']);
+                $source->setGroup($group);
+
+                $errors = $this->validator->validate($source);
+                if (count($errors) > 0) {
+                    $output->writeln('<error>Error:</error> Validation failed');
+                    $output->writeln($errors);
+                    return Command::FAILURE;
+                }
+
+                $this->entityManager->persist($source);
             }
 
-            $source = new SourceEntity();
-            $source->setName($parsedSource['name']);
-            $source->setUnit($parsedSource['unit']);
-            $source->setGroup($group);
-
-            $errors = $this->validator->validate($source);
-            if (count($errors) > 0) {
-                $output->writeln('<error>Error:</error> Validation failed');
-                $output->writeln($errors);
-                return Command::FAILURE;
-            }
-
-            $this->entityManager->persist($source);
+            $this->entityManager->flush();
+            $output->writeln('<info>Success:</info> Imported ' . count($parsedMeasurements) . ' measurement source(s)');
         }
-
-        $this->entityManager->flush();
-        $output->writeln('<info>Success:</info> Imported ' . count($parsedContent) . ' source(s)');
 
         return Command::SUCCESS;
     }

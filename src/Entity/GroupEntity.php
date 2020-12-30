@@ -47,10 +47,10 @@ class GroupEntity implements EntityInterface
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="App\Entity\SourceEntity", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="MeasurementSourceEntity", mappedBy="group")
      * @Serializer\Exclude()
      */
-    protected $sources;
+    protected $measurementSources;
 
     /**
      * @var Collection
@@ -65,7 +65,7 @@ class GroupEntity implements EntityInterface
      */
     public function __construct()
     {
-        $this->sources = new ArrayCollection();
+        $this->measurementSources = new ArrayCollection();
         $this->recordings = new ArrayCollection();
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
@@ -138,33 +138,33 @@ class GroupEntity implements EntityInterface
     /**
      * @return Collection
      */
-    public function getSources(): Collection
+    public function getMeasurementSources(): Collection
     {
-        return $this->sources;
+        return $this->measurementSources;
     }
 
     /**
-     * @param Collection $sources
+     * @param Collection $measurementSources
      */
-    public function setSources(Collection $sources)
+    public function setMeasurementSources(Collection $measurementSources)
     {
-        $this->sources = $sources;
+        $this->measurementSources = $measurementSources;
     }
 
     /**
-     * @param SourceEntity $source
+     * @param MeasurementSourceEntity $measurementSource
      */
-    public function addSource(SourceEntity $source)
+    public function addMeasurementSource(MeasurementSourceEntity $measurementSource)
     {
-        $this->sources[] = $source;
+        $this->measurementSources[] = $measurementSource;
     }
 
     /**
-     * @param SourceEntity $source
+     * @param MeasurementSourceEntity $measurementSource
      */
-    public function removeSource(SourceEntity $source)
+    public function removeMeasurementSource(MeasurementSourceEntity $measurementSource)
     {
-        $this->sources->remove($source);
+        $this->measurementSources->remove($measurementSource);
     }
 
     /**

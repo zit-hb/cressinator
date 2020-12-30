@@ -45,9 +45,9 @@ Start test server:
 
     curl -d "group[name]=foo" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/groups/add
 
-### Add Source
+### Add Measurement Source
 
-    curl -d "source[name]=foo&source[unit]=bar&source[group]=1" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/sources/add
+    curl -d "measurement_source[name]=foo&measurement_source[unit]=bar&measurement_source[group]=1" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/measurement_sources/add
 
 ### Add Measurement
 
