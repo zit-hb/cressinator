@@ -10,10 +10,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MeasurementSourceRepository")
- * @ORM\Table(name="measurement_sources")
+ * @ORM\Entity(repositoryClass="App\Repository\RecordingSourceRepository")
+ * @ORM\Table(name="recording_sources")
  */
-class MeasurementSourceEntity implements EntityInterface
+class RecordingSourceEntity implements EntityInterface
 {
     /**
      * @var int|null
@@ -32,14 +32,6 @@ class MeasurementSourceEntity implements EntityInterface
     protected $name;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=50)
-     * @Assert\Length(max="50")
-     * @Assert\NotBlank()
-     */
-    protected $unit;
-
-    /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      * @Serializer\Type("DateTime<'c'>")
@@ -55,25 +47,25 @@ class MeasurementSourceEntity implements EntityInterface
 
     /**
      * @var GroupEntity|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="measurementSources")
+     * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="recordingSources")
      * @Assert\NotNull()
      */
     protected $group;
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="App\Entity\MeasurementEntity", mappedBy="source")
+     * @ORM\OneToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="source")
      * @ORM\OrderBy({"createdAt" = "ASC"})
      * @Serializer\Exclude()
      */
-    protected $measurements;
+    protected $recordings;
 
     /**
-     * MeasurementSourceEntity constructor.
+     * RecordingSourceEntity constructor.
      */
     public function __construct()
     {
-        $this->measurements = new ArrayCollection();
+        $this->recordings = new ArrayCollection();
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
     }
@@ -108,22 +100,6 @@ class MeasurementSourceEntity implements EntityInterface
     public function setName(string $name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUnit(): ?string
-    {
-        return $this->unit;
-    }
-
-    /**
-     * @param string $unit
-     */
-    public function setUnit(string $unit)
-    {
-        $this->unit = $unit;
     }
 
     /**
@@ -177,32 +153,32 @@ class MeasurementSourceEntity implements EntityInterface
     /**
      * @return Collection
      */
-    public function getMeasurements(): Collection
+    public function getRecordings(): Collection
     {
-        return $this->measurements;
+        return $this->recordings;
     }
 
     /**
-     * @param Collection $measurements
+     * @param Collection $recordings
      */
-    public function setMeasurements(Collection $measurements)
+    public function setRecordings(Collection $recordings)
     {
-        $this->measurements = $measurements;
+        $this->recordings = $recordings;
     }
 
     /**
-     * @param MeasurementEntity $measurement
+     * @param RecordingEntity $recording
      */
-    public function addMeasurement(MeasurementEntity $measurement)
+    public function addRecording(RecordingEntity $recording)
     {
-        $this->measurements[] = $measurement;
+        $this->recordings[] = $recording;
     }
 
     /**
-     * @param MeasurementEntity $measurement
+     * @param RecordingEntity $recording
      */
-    public function removeMeasurement(MeasurementEntity $measurement)
+    public function removeRecording(RecordingEntity $recording)
     {
-        $this->measurements->remove($measurement);
+        $this->recordings->remove($recording);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\GroupEntity;
 use App\Entity\MeasurementSourceEntity;
+use App\Entity\RecordingSourceEntity;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -127,6 +128,32 @@ class ImportGroupCommand extends Command
 
             $this->entityManager->flush();
             $output->writeln('<info>Success:</info> Imported ' . count($parsedMeasurements) . ' measurement source(s)');
+        }
+
+        if (!empty($parsedContent['recordings'])) {
+            $parsedRecordings = $parsedContent['recordings'];
+            foreach ($parsedRecordings as $parsedSource) {
+                if (empty($parsedSource['name'])) {
+                    $output->writeln('<error>Error:</error> Invalid file structure');
+                    return Command::FAILURE;
+                }
+
+                $source = new RecordingSourceEntity();
+                $source->setName($parsedSource['name']);
+                $source->setGroup($group);
+
+                $errors = $this->validator->validate($source);
+                if (count($errors) > 0) {
+                    $output->writeln('<error>Error:</error> Validation failed');
+                    $output->writeln($errors);
+                    return Command::FAILURE;
+                }
+
+                $this->entityManager->persist($source);
+            }
+
+            $this->entityManager->flush();
+            $output->writeln('<info>Success:</info> Imported ' . count($parsedRecordings) . ' recording source(s)');
         }
 
         return Command::SUCCESS;

@@ -44,12 +44,12 @@ class RecordingEntity implements EntityInterface
     protected $createdAt;
 
     /**
-     * @var GroupEntity|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="recordings")
+     * @var RecordingSourceEntity|null
+     * @ORM\ManyToOne(targetEntity="RecordingSourceEntity", inversedBy="recordings")
      * @Assert\NotNull()
      * @Serializer\Exclude()
      */
-    protected $group;
+    protected $source;
 
     /**
      * RecordingEntity constructor.
@@ -124,18 +124,18 @@ class RecordingEntity implements EntityInterface
     }
 
     /**
-     * @return GroupEntity|null
+     * @return RecordingSourceEntity|null
      */
-    public function getGroup(): ?GroupEntity
+    public function getSource(): ?RecordingSourceEntity
     {
-        return $this->group;
+        return $this->source;
     }
 
     /**
-     * @param GroupEntity $group
+     * @param RecordingSourceEntity $source
      */
-    public function setGroup(GroupEntity $group)
+    public function setSource(RecordingSourceEntity $source)
     {
-        $this->group = $group;
+        $this->source = $source;
     }
 }

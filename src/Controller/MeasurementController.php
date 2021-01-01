@@ -34,7 +34,6 @@ class MeasurementController extends AbstractController
         $group = $groupRepository->find($groupId);
 
         return $this->render('measurement/group.html.twig', [
-            'sources' => $sources,
             'group' => $group
         ]);
     }

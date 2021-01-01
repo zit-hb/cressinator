@@ -1,0 +1,22 @@
+<div id="recording" data-group="{{ group.getId() }}"></div>
+
+<table class="table">
+    <tr>
+        <th></th>
+        {% for source in group.getRecordingSources() %}
+            <th>{{ source.getName() }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>Image</th>
+        {% for source in group.getRecordingSources() %}
+            <td><img id="recording-image-{{ source.getId() }}" /></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>Date</th>
+        {% for source in group.getRecordingSources() %}
+            <td id="recording-date-{{ source.getId() }}"></td>
+        {% endfor %}
+    </tr>
+</table>

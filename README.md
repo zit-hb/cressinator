@@ -53,6 +53,10 @@ Start test server:
 
     curl -d "measurement[value]=foo&measurement[source]=1" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/measurements/add
 
+### Add Recording Source
+
+    curl -d "recording_source[name]=foo&recording_source[group]=1" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recording_sources/add
+
 ### Upload Recording
 
-    curl -F "recording[file]=@/path/to/file.jpg" -F "recording[group]=1" -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recordings/add
+    curl -F "recording[file]=@/path/to/file.jpg" -F "recording[source]=1" -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recordings/add

@@ -21,17 +21,12 @@ d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
         url: '/api/recordings/closest:' + encodeURIComponent(point.created_at.toJSON()) + '/group:' + encodeURIComponent($('#recording').data('group')),
         headers: { 'X-Auth-Token': $('#api').data('token') },
         success: function(data) {
-            let source = '';
-            if ('id' in data) {
-                source = '/recordings/show:' + encodeURIComponent(data['id']);
+            for (const [group, recording] of Object.entries(data)) {
+                let image = '/recordings/show:' + encodeURIComponent(recording['id']);
+                $('#recording-image-' + group).attr('src', image);
+                let createdAt = new Date(recording['created_at']).toISOString();
+                $('#recording-date-' + group).text(createdAt);
             }
-            $('#recording-image').attr('src', source);
-
-            let createdAt = '';
-            if ('created_at' in data) {
-                createdAt = new Date(data['created_at']).toISOString();
-            }
-            $('#recording-date').text(createdAt);
         }
     });
 });

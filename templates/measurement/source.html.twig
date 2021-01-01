@@ -14,22 +14,6 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="measurement-graph" data-name="{{ source.getName() }}" data-unit="{{ source.getUnit() }}" data-measurements="{{ source.getMeasurements()|jsonify }}"></div>
-    </div>
-
-    <div id="recording" data-group="{{ group.getId() }}">
-        <img id="recording-image" />
-    </div>
-
-    <table class="table">
-        <tr>
-            <th>Measurement Date</th>
-            <td id="measurement-date"></td>
-        </tr>
-        <tr>
-            <th>Recording Date</th>
-            <td id="recording-date"></td>
-        </tr>
-    </table>
+    {% include "measurement/_graph.html.twig" %}
+    {% include "measurement/_recording.html.twig" %}
 {% endblock %}

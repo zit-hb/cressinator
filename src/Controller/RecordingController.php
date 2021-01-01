@@ -50,8 +50,8 @@ class RecordingController extends AbstractController
     {
         /** @var RecordingRepository $recordingRepository */
         $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
-        $recording = $recordingRepository->findClosestByGroup(new DateTime($date), $groupId);
-        return new JsonResponse($serializer->normalize($recording));
+        $recordings = $recordingRepository->findClosestByGroup(new DateTime($date), $groupId);
+        return new JsonResponse($serializer->normalize($recordings));
     }
 
     /**
@@ -72,11 +72,14 @@ class RecordingController extends AbstractController
         $recording->setFile($fileName);
         $recording->setFileName($file->getClientOriginalName());
 
-        $group = $recording->getGroup();
+        $source = $recording->getSource();
+        $source->setUpdatedAt(new DateTime());
+        $group = $source->getGroup();
         $group->setUpdatedAt(new DateTime());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($recording);
+        $em->persist($source);
         $em->persist($group);
         $em->flush();
 

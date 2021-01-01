@@ -54,11 +54,10 @@ class GroupEntity implements EntityInterface
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="App\Entity\RecordingEntity", mappedBy="group")
-     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @ORM\OneToMany(targetEntity="RecordingSourceEntity", mappedBy="group")
      * @Serializer\Exclude()
      */
-    protected $recordings;
+    protected $recordingSources;
 
     /**
      * GroupEntity constructor.
@@ -66,7 +65,7 @@ class GroupEntity implements EntityInterface
     public function __construct()
     {
         $this->measurementSources = new ArrayCollection();
-        $this->recordings = new ArrayCollection();
+        $this->recordingSources = new ArrayCollection();
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
     }
@@ -170,32 +169,32 @@ class GroupEntity implements EntityInterface
     /**
      * @return Collection
      */
-    public function getRecordings(): Collection
+    public function getRecordingSources(): Collection
     {
-        return $this->recordings;
+        return $this->recordingSources;
     }
 
     /**
-     * @param Collection $recordings
+     * @param Collection $recordingSources
      */
-    public function setRecordings(Collection $recordings)
+    public function setRecordingSources(Collection $recordingSources)
     {
-        $this->recordings = $recordings;
+        $this->recordingSources = $recordingSources;
     }
 
     /**
-     * @param RecordingEntity $recording
+     * @param MeasurementSourceEntity $recordingSource
      */
-    public function addRecording(RecordingEntity $recording)
+    public function addRecordingSource(MeasurementSourceEntity $recordingSource)
     {
-        $this->recordings[] = $recording;
+        $this->recordingSources[] = $recordingSource;
     }
 
     /**
-     * @param RecordingEntity $recording
+     * @param MeasurementSourceEntity $recordingSource
      */
-    public function removeRecording(RecordingEntity $recording)
+    public function removeRecordingSource(MeasurementSourceEntity $recordingSource)
     {
-        $this->recordings->remove($recording);
+        $this->recordingSources->remove($recordingSource);
     }
 }
