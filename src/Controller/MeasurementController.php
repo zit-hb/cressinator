@@ -25,10 +25,6 @@ class MeasurementController extends AbstractController
      */
     public function showByGroup(string $groupId): Response
     {
-        /** @var MeasurementSourceRepository $measurementSourceRepository */
-        $measurementSourceRepository = $this->getDoctrine()->getRepository(MeasurementSourceEntity::class);
-        $sources = $measurementSourceRepository->findByGroup($groupId);
-
         /** @var GroupRepository $groupRepository */
         $groupRepository = $this->getDoctrine()->getRepository(GroupEntity::class);
         $group = $groupRepository->find($groupId);
