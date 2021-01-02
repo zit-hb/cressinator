@@ -22,6 +22,9 @@
                     <td>
                         {% for source in group.getMeasurementSources() %}
                             <a href="{{ path('measurement_by_source', {'sourceId': source.getId()}) }}">{{ source.getName() }}</a>
+                            {% if not loop.last %}
+                                &centerdot;
+                            {% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ group.getCreatedAt()|date("c") }}</td>
