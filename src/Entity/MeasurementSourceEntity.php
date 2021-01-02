@@ -57,6 +57,7 @@ class MeasurementSourceEntity implements EntityInterface
      * @var GroupEntity|null
      * @ORM\ManyToOne(targetEntity="App\Entity\GroupEntity", inversedBy="measurementSources")
      * @Assert\NotNull()
+     * @Serializer\Exclude()
      */
     protected $group;
 

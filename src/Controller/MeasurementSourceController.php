@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\MeasurementSourceEntity;
 use App\Form\MeasurementSourceType;
+use App\Repository\MeasurementSourceRepository;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,5 +29,21 @@ class MeasurementSourceController extends AbstractController
         $em->flush();
 
         return new JsonResponse($serializer->normalize($source));
+    }
+
+    /**
+     * @param string $groupId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/measurement_sources/group:{groupId}")
+     */
+    public function list(string $groupId, SerializeService $serializer): JsonResponse
+    {
+        /** @var MeasurementSourceRepository $em */
+        $measurementSourceRepository = $this->getDoctrine()->getRepository(MeasurementSourceEntity::class);
+        /** @var MeasurementSourceEntity[] $sources */
+        $sources = $measurementSourceRepository->findBy(['group' => $groupId]);
+
+        return new JsonResponse($serializer->normalize($sources));
     }
 }
