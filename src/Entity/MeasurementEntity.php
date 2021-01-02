@@ -23,8 +23,7 @@ class MeasurementEntity implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=50)
-     * @Assert\Length(max="50")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank()
      */
     protected $value;
