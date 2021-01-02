@@ -19,4 +19,6 @@ measurements:
       unit: mbar
 recordings:
     -
-      name: Front
+      name: Normal
+    -
+      name: Microscope
