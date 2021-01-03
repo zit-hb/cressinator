@@ -38,11 +38,11 @@ class FormService
     public function checkForm(FormInterface $form)
     {
         if (!$form->isSubmitted()) {
-            throw new FormNotFoundException();
+            throw new FormNotFoundException($form);
         }
 
         if (!$form->isValid()) {
-            throw new FormNotValidException();
+            throw new FormNotValidException($form);
         }
     }
 
