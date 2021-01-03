@@ -6,7 +6,7 @@ for (let measurement of measurements) {
     MG.data_graphic({
         title: measurement.dataset.name,
         data: data,
-        height: 150,
+        height: 250,
         full_width: true,
         target: measurement,
         y_label: measurement.dataset.unit,
