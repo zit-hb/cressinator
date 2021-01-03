@@ -67,7 +67,7 @@ class RecordingController extends AbstractController
 
         /** @var UploadedFile $file */
         $file = $recording->getFile();
-        $fileName = time() . '_' . hash('sha256', random_bytes(16));
+        $fileName = $recording->getSource()->getId() . '_' . time() . '_' . hash('sha1', random_bytes(8));
         $file->move($this->getParameter('upload_directory'), $fileName);
         $recording->setFile($fileName);
         $recording->setFileName($file->getClientOriginalName());
