@@ -61,6 +61,10 @@ Start test server:
 
     curl -d "recording_source[name]=foo&recording_source[group]=1" -X POST -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recording_sources/add
 
+### List MeaRecordingsurement Sources
+
+    curl -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recording_sources/group:1
+
 ### Upload Recording
 
     curl -F "recording[file]=@/path/to/file.jpg" -F "recording[source]=1" -H "X-AUTH-TOKEN: ..." http://127.0.0.1:8000/api/recordings/add

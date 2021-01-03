@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\RecordingSourceEntity;
 use App\Form\RecordingSourceType;
+use App\Repository\RecordingSourceRepository;
 use App\Service\Api\FormService;
 use App\Service\SerializeService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,5 +29,21 @@ class RecordingSourceController extends AbstractController
         $em->flush();
 
         return new JsonResponse($serializer->normalize($source));
+    }
+
+    /**
+     * @param string $groupId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/recording_sources/group:{groupId}")
+     */
+    public function listByGroup(string $groupId, SerializeService $serializer): JsonResponse
+    {
+        /** @var RecordingSourceRepository $em */
+        $recordingSourceRepository = $this->getDoctrine()->getRepository(RecordingSourceEntity::class);
+        /** @var RecordingSourceEntity[] $sources */
+        $sources = $recordingSourceRepository->findBy(['group' => $groupId]);
+
+        return new JsonResponse($serializer->normalize($sources));
     }
 }

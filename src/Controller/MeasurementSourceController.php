@@ -37,7 +37,7 @@ class MeasurementSourceController extends AbstractController
      * @return JsonResponse
      * @Route("/api/measurement_sources/group:{groupId}")
      */
-    public function list(string $groupId, SerializeService $serializer): JsonResponse
+    public function listByGroup(string $groupId, SerializeService $serializer): JsonResponse
     {
         /** @var MeasurementSourceRepository $em */
         $measurementSourceRepository = $this->getDoctrine()->getRepository(MeasurementSourceEntity::class);
