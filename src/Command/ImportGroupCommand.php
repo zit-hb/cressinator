@@ -24,6 +24,9 @@ class ImportGroupCommand extends Command
     /** @var ValidatorInterface */
     private $validator;
 
+    /** @var Filesystem */
+    private $fs;
+
     /**
      * @param EntityManagerInterface $entityManager
      * @param ValidatorInterface $validator
@@ -34,6 +37,7 @@ class ImportGroupCommand extends Command
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
+        $this->fs = new Filesystem();
         parent::__construct();
     }
 
@@ -86,7 +90,7 @@ class ImportGroupCommand extends Command
     {
         /** @var GroupRepository $groupRepository */
         $groupRepository = $this->entityManager->getRepository(GroupEntity::class);
-        /** @var GroupEntity $group */
+        /** @var GroupEntity|null $group */
         $group = $groupRepository->find($input->getOption('group'));
 
         if (!$group) {
@@ -94,8 +98,7 @@ class ImportGroupCommand extends Command
             return Command::FAILURE;
         }
 
-        $fs = new Filesystem();
-        if (!$fs->exists($input->getOption('file'))) {
+        if (!$this->fs->exists($input->getOption('file'))) {
             $output->writeln('<error>Error:</error> File ' . $input->getOption('file') . ' does not exist');
             return Command::FAILURE;
         }
@@ -103,59 +106,79 @@ class ImportGroupCommand extends Command
         $rawContent = file_get_contents($input->getOption('file'));
         $parsedContent = Yaml::parse($rawContent);
 
-        if (!empty($parsedContent['measurements'])) {
-            $parsedMeasurements = $parsedContent['measurements'];
-            foreach ($parsedMeasurements as $parsedSource) {
-                if (empty($parsedSource['name']) || empty($parsedSource['unit'])) {
-                    $output->writeln('<error>Error:</error> Invalid file structure');
-                    return Command::FAILURE;
-                }
-
-                $source = new MeasurementSourceEntity();
-                $source->setName($parsedSource['name']);
-                $source->setUnit($parsedSource['unit']);
-                $source->setGroup($group);
-
-                $errors = $this->validator->validate($source);
-                if (count($errors) > 0) {
-                    $output->writeln('<error>Error:</error> Validation failed');
-                    $output->writeln($errors);
-                    return Command::FAILURE;
-                }
-
-                $this->entityManager->persist($source);
-            }
-
-            $this->entityManager->flush();
-            $output->writeln('<info>Success:</info> Imported ' . count($parsedMeasurements) . ' measurement source(s)');
+        if (!empty($parsedContent['measurements']) && is_array($parsedContent['measurements'])) {
+            $this->handleMeasurements($output, $group, $parsedContent['measurements']);
         }
 
-        if (!empty($parsedContent['recordings'])) {
-            $parsedRecordings = $parsedContent['recordings'];
-            foreach ($parsedRecordings as $parsedSource) {
-                if (empty($parsedSource['name'])) {
-                    $output->writeln('<error>Error:</error> Invalid file structure');
-                    return Command::FAILURE;
-                }
-
-                $source = new RecordingSourceEntity();
-                $source->setName($parsedSource['name']);
-                $source->setGroup($group);
-
-                $errors = $this->validator->validate($source);
-                if (count($errors) > 0) {
-                    $output->writeln('<error>Error:</error> Validation failed');
-                    $output->writeln($errors);
-                    return Command::FAILURE;
-                }
-
-                $this->entityManager->persist($source);
-            }
-
-            $this->entityManager->flush();
-            $output->writeln('<info>Success:</info> Imported ' . count($parsedRecordings) . ' recording source(s)');
+        if (!empty($parsedContent['recordings']) && is_array($parsedContent['recordings'])) {
+            $this->handleRecordings($output, $group, $parsedContent['recordings']);
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param GroupEntity $group
+     * @param array $measurements
+     */
+    private function handleMeasurements(OutputInterface $output, GroupEntity $group, array $measurements): void
+    {
+        $counter = 0;
+        foreach ($measurements as $measurement) {
+            if (empty($measurement['name']) || empty($measurement['unit'])) {
+                $output->writeln('<error>Error:</error> Invalid measurement entry in file');
+                continue;
+            }
+
+            $source = new MeasurementSourceEntity();
+            $source->setName($measurement['name']);
+            $source->setUnit($measurement['unit']);
+            $source->setGroup($group);
+
+            $errors = $this->validator->validate($source);
+            if (count($errors) > 0) {
+                $output->writeln('<error>Error:</error> Validation failed: ' . $errors);
+                continue;
+            }
+
+            $this->entityManager->persist($source);
+            $counter++;
+        }
+
+        $this->entityManager->flush();
+        $output->writeln('<info>Success:</info> Imported ' . $counter . ' measurement source(s)');
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param GroupEntity $group
+     * @param array $recordings
+     */
+    private function handleRecordings(OutputInterface $output, GroupEntity $group, array $recordings): void
+    {
+        $counter = 0;
+        foreach ($recordings as $recording) {
+            if (empty($recording['name'])) {
+                $output->writeln('<error>Error:</error> Invalid recording entry in file');
+                continue;
+            }
+
+            $source = new RecordingSourceEntity();
+            $source->setName($recording['name']);
+            $source->setGroup($group);
+
+            $errors = $this->validator->validate($source);
+            if (count($errors) > 0) {
+                $output->writeln('<error>Error:</error> Validation failed: ' . $errors);
+                continue;
+            }
+
+            $this->entityManager->persist($source);
+            $counter++;
+        }
+
+        $this->entityManager->flush();
+        $output->writeln('<info>Success:</info> Imported ' . $counter . ' recording source(s)');
     }
 }
