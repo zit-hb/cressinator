@@ -23,8 +23,10 @@
         <th>Control</th>
         {% for source in group.getRecordingSources() %}
             <td>
+                <button data-source="{{ source.getId() }}" class="btn btn-primary first-recording" type="button">First</button>
                 <button data-source="{{ source.getId() }}" class="btn btn-primary previous-recording" type="button">Previous</button>
                 <button data-source="{{ source.getId() }}" class="btn btn-primary next-recording" type="button">Next</button>
+                <button data-source="{{ source.getId() }}" class="btn btn-primary last-recording" type="button">Last</button>
             </td>
         {% endfor %}
     </tr>

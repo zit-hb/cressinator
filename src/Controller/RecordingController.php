@@ -84,6 +84,34 @@ class RecordingController extends AbstractController
     }
 
     /**
+     * @param string $sourceId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/recordings/last/source:{sourceId}")
+     */
+    public function lastBySource(string $sourceId, SerializeService $serializer): JsonResponse
+    {
+        /** @var RecordingRepository $recordingRepository */
+        $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
+        $recording = $recordingRepository->findLastBySource($sourceId);
+        return new JsonResponse($serializer->normalize($recording));
+    }
+
+    /**
+     * @param string $sourceId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/recordings/first/source:{sourceId}")
+     */
+    public function firstBySource(string $sourceId, SerializeService $serializer): JsonResponse
+    {
+        /** @var RecordingRepository $recordingRepository */
+        $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
+        $recording = $recordingRepository->findFirstBySource($sourceId);
+        return new JsonResponse($serializer->normalize($recording));
+    }
+
+    /**
      * @param FormService $form
      * @param SerializeService $serializer
      * @return JsonResponse

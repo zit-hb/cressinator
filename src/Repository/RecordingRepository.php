@@ -112,4 +112,44 @@ class RecordingRepository extends EntityRepository
             return null;
         }
     }
+
+    /**
+     * Find last recording for source
+     * @param int $sourceId
+     * @return RecordingEntity|null
+     */
+    public function findLastBySource(int $sourceId): ?RecordingEntity
+    {
+        $queryBuilder = $this->createQueryBuilder('recording')
+            ->setParameter('source', $sourceId)
+            ->andWhere('recording.source = :source')
+            ->orderBy('recording.createdAt', 'desc')
+            ->setMaxResults(1)
+        ;
+        try {
+            return $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $exception) {
+            return null;
+        }
+    }
+
+    /**
+     * Find first recording for source
+     * @param int $sourceId
+     * @return RecordingEntity|null
+     */
+    public function findFirstBySource(int $sourceId): ?RecordingEntity
+    {
+        $queryBuilder = $this->createQueryBuilder('recording')
+            ->setParameter('source', $sourceId)
+            ->andWhere('recording.source = :source')
+            ->orderBy('recording.createdAt', 'asc')
+            ->setMaxResults(1)
+        ;
+        try {
+            return $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $exception) {
+            return null;
+        }
+    }
 }

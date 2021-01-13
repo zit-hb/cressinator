@@ -28,36 +28,45 @@ d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
     });
 });
 
-$('.previous-recording').click(function() {
-    let source = $(this).data('source');
-    let current_date = $('#recording-date-' + source).text();
-
-    if (!current_date) {
-        return;
-    }
-
-    $.ajax({
-        url: '/api/recordings/previous:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source),
-        headers: { 'X-Auth-Token': $('#api').data('token') },
-        success: function(recording) {
-            if (jQuery.isEmptyObject(recording)) {
-                return;
-            }
-            showRecording(recording['id'], recording['created_at'], source);
-        }
-    });
-});
-
 $('.next-recording').click(function() {
     let source = $(this).data('source');
     let current_date = $('#recording-date-' + source).text();
+    if (!current_date) return;
+    controlRecording(
+        source,
+        '/api/recordings/next:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source)
+    );
+});
 
-    if (!current_date) {
-        return;
-    }
+$('.previous-recording').click(function() {
+    let source = $(this).data('source');
+    let current_date = $('#recording-date-' + source).text();
+    if (!current_date) return;
+    controlRecording(
+        source,
+        '/api/recordings/previous:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source)
+    );
+});
 
+$('.last-recording').click(function() {
+    let source = $(this).data('source');
+    controlRecording(
+        source,
+        '/api/recordings/last/source:' + encodeURIComponent(source)
+    );
+});
+
+$('.first-recording').click(function() {
+    let source = $(this).data('source');
+    controlRecording(
+        source,
+        '/api/recordings/first/source:' + encodeURIComponent(source)
+    );
+});
+
+function controlRecording(source, url) {
     $.ajax({
-        url: '/api/recordings/next:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source),
+        url: url,
         headers: { 'X-Auth-Token': $('#api').data('token') },
         success: function(recording) {
             if (jQuery.isEmptyObject(recording)) {
@@ -66,7 +75,7 @@ $('.next-recording').click(function() {
             showRecording(recording['id'], recording['created_at'], source);
         }
     });
-});
+}
 
 function showRecording(id, created_at, source) {
     let image = '/recordings/show:' + encodeURIComponent(id);
