@@ -41,17 +41,46 @@ class RecordingController extends AbstractController
     /**
      * @param string $date
      * @param string $groupId
-     * @param Request $request
      * @param SerializeService $serializer
-     * @return Response
+     * @return JsonResponse
      * @Route("/api/recordings/closest:{date}/group:{groupId}")
      */
-    public function closestByGroup(string $date, string $groupId, Request $request, SerializeService $serializer): Response
+    public function closestByGroup(string $date, string $groupId, SerializeService $serializer): JsonResponse
     {
         /** @var RecordingRepository $recordingRepository */
         $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
         $recordings = $recordingRepository->findClosestByGroup(new DateTime($date), $groupId);
         return new JsonResponse($serializer->normalize($recordings));
+    }
+
+    /**
+     * @param string $date
+     * @param string $sourceId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/recordings/next:{date}/source:{sourceId}")
+     */
+    public function nextBySource(string $date, string $sourceId, SerializeService $serializer): JsonResponse
+    {
+        /** @var RecordingRepository $recordingRepository */
+        $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
+        $recording = $recordingRepository->findNextBySource(new DateTime($date), $sourceId);
+        return new JsonResponse($serializer->normalize($recording));
+    }
+
+    /**
+     * @param string $date
+     * @param string $sourceId
+     * @param SerializeService $serializer
+     * @return JsonResponse
+     * @Route("/api/recordings/previous:{date}/source:{sourceId}")
+     */
+    public function previousBySource(string $date, string $sourceId, SerializeService $serializer): JsonResponse
+    {
+        /** @var RecordingRepository $recordingRepository */
+        $recordingRepository = $this->getDoctrine()->getRepository(RecordingEntity::class);
+        $recording = $recordingRepository->findPreviousBySource(new DateTime($date), $sourceId);
+        return new JsonResponse($serializer->normalize($recording));
     }
 
     /**

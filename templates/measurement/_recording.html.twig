@@ -19,4 +19,13 @@
             <td id="recording-date-{{ source.getId() }}"></td>
         {% endfor %}
     </tr>
+    <tr>
+        <th>Control</th>
+        {% for source in group.getRecordingSources() %}
+            <td>
+                <button data-source="{{ source.getId() }}" class="btn btn-primary previous-recording" type="button">Previous</button>
+                <button data-source="{{ source.getId() }}" class="btn btn-primary next-recording" type="button">Next</button>
+            </td>
+        {% endfor %}
+    </tr>
 </table>

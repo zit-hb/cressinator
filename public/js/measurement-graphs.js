@@ -21,12 +21,56 @@ d3.selectAll('.mg-rollover-rect rect').on('click', function(point) {
         url: '/api/recordings/closest:' + encodeURIComponent(point.created_at.toJSON()) + '/group:' + encodeURIComponent($('#recording').data('group')),
         headers: { 'X-Auth-Token': $('#api').data('token') },
         success: function(data) {
-            for (const [group, recording] of Object.entries(data)) {
-                let image = '/recordings/show:' + encodeURIComponent(recording['id']);
-                $('#recording-image-' + group).attr('src', image);
-                let createdAt = new Date(recording['created_at']).toISOString();
-                $('#recording-date-' + group).text(createdAt);
+            for (const [source, recording] of Object.entries(data)) {
+                showRecording(recording['id'], recording['created_at'], source);
             }
         }
     });
 });
+
+$('.previous-recording').click(function() {
+    let source = $(this).data('source');
+    let current_date = $('#recording-date-' + source).text();
+
+    if (!current_date) {
+        return;
+    }
+
+    $.ajax({
+        url: '/api/recordings/previous:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source),
+        headers: { 'X-Auth-Token': $('#api').data('token') },
+        success: function(recording) {
+            if (jQuery.isEmptyObject(recording)) {
+                return;
+            }
+            showRecording(recording['id'], recording['created_at'], source);
+        }
+    });
+});
+
+$('.next-recording').click(function() {
+    let source = $(this).data('source');
+    let current_date = $('#recording-date-' + source).text();
+
+    if (!current_date) {
+        return;
+    }
+
+    $.ajax({
+        url: '/api/recordings/next:' + encodeURIComponent(current_date) + '/source:' + encodeURIComponent(source),
+        headers: { 'X-Auth-Token': $('#api').data('token') },
+        success: function(recording) {
+            if (jQuery.isEmptyObject(recording)) {
+                return;
+            }
+            showRecording(recording['id'], recording['created_at'], source);
+        }
+    });
+});
+
+function showRecording(id, created_at, source) {
+    let image = '/recordings/show:' + encodeURIComponent(id);
+    $('#recording-image-' + source).attr('src', image);
+    let createdAt = new Date(created_at).toISOString();
+    $('#recording-date-' + source).text(createdAt);
+}
