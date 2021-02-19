@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
- * @ORM\Table(name="groups")
+ * @ORM\Table(name="`groups`")
  */
 class GroupEntity implements EntityInterface
 {
